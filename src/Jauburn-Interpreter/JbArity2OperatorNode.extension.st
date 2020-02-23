@@ -18,7 +18,7 @@ JbArity2OperatorNode >> evaluateIn: environment [
 		ifTrue: [ ^lhsValue / rhsValue ].
 		
 "======================================================"		
-"==============Boolean operators======================="
+"==============Comparison operators===================="
 	self operator = '=='
 		ifTrue: [ ^ lhsValue = rhsValue ].
 	self operator = '<'

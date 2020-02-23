@@ -91,6 +91,9 @@ JbInterpreterTest >> testDeclarationBindsVariableToExpressionValue [
 	self interpret: 'var x = 10*2;var y = x/5;var z = y*4;var w = z-8;'.
 	self assert: (interpreter environment at: 'w') equals: 8.
 	
+
+	
+	
 ]
 
 { #category : #running }
@@ -98,4 +101,23 @@ JbInterpreterTest >> testDeclarationCreatesVariable [
 
 	self interpret: 'var x = 99;'.
 	self assert: (interpreter environment includesKey: 'x')
+]
+
+{ #category : #running }
+JbInterpreterTest >> testUnaryNegationOperator [
+
+	self interpret: 'var x = -2;'.
+	self assert: (interpreter environment at: 'x') equals: -2.
+	
+	self interpret: 'var x = -2 * 2;'.
+	self assert: (interpreter environment at: 'x') equals: -4.	
+	
+	self interpret: 'var x = -2 * -2;'.
+	self assert: (interpreter environment at: 'x') equals: 4.
+	
+	
+	
+
+	
+	
 ]
