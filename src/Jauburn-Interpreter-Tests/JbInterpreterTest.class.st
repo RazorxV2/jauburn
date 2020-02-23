@@ -24,6 +24,55 @@ JbInterpreterTest >> setUp [
 	interpreter := JbInterpreter new
 ]
 
+{ #category : #tests }
+JbInterpreterTest >> testComparisonOperators [
+	"testing the comparison operators in JBArity2OperatorNode"
+
+	self interpret: 'var a = 1==2;'.
+	self assert: (interpreter environment at: 'a') equals: false.
+	
+	self interpret: 'var a = 1==1;'.
+	self assert: (interpreter environment at: 'a') equals: true.
+		
+	self interpret: 'var a = 1<2;'.
+	self assert: (interpreter environment at: 'a') equals: true.	
+
+	self interpret: 'var a = 2<1;'.
+	self assert: (interpreter environment at: 'a') equals: false.
+	
+	self interpret: 'var a = 1<=2;'.
+	self assert: (interpreter environment at: 'a') equals: true.
+	
+	self interpret: 'var a = 1<=1;'.
+	self assert: (interpreter environment at: 'a') equals: true.
+	
+	self interpret: 'var a = 2<=1;'.
+	self assert: (interpreter environment at: 'a') equals: false.
+	
+	self interpret: 'var a = 2>1;'.
+	self assert: (interpreter environment at: 'a') equals: true.
+	
+	self interpret: 'var a = 1>2;'.
+	self assert: (interpreter environment at: 'a') equals: false.
+	
+	self interpret: 'var a = 2>=1;'.
+	self assert: (interpreter environment at: 'a') equals: true.
+	
+	self interpret: 'var a = 1>=1;'.
+	self assert: (interpreter environment at: 'a') equals: true.
+	
+	self interpret: 'var a = 1>=2;'.
+	self assert: (interpreter environment at: 'a') equals: false.
+	
+	self interpret: 'var a = 1!=2;'.
+	self assert: (interpreter environment at: 'a') equals: true.
+	
+		self interpret: 'var a = 2!=2;'.
+	self assert: (interpreter environment at: 'a') equals: false.
+
+
+]
+
 { #category : #running }
 JbInterpreterTest >> testDeclarationBindsVariableToExpressionValue [
 
@@ -31,7 +80,17 @@ JbInterpreterTest >> testDeclarationBindsVariableToExpressionValue [
 	self assert: (interpreter environment at: 'x') equals: 19.
 	
 	self interpret: 'var x = 6;var y = 2*x;'.
-	self assert: (interpreter environment at: 'y') equals: 12
+	self assert: (interpreter environment at: 'y') equals: 12.
+	
+	self interpret: 'var x = 10;var y = x-5;'.
+	self assert: (interpreter environment at: 'y') equals: 5.
+	
+	self interpret: 'var x = 10;var y = x/5;'.
+	self assert: (interpreter environment at: 'y') equals: 2.
+	
+	self interpret: 'var x = 10*2;var y = x/5;var z = y*4;var w = z-8;'.
+	self assert: (interpreter environment at: 'w') equals: 8.
+	
 ]
 
 { #category : #running }
