@@ -25,6 +25,17 @@ JbInterpreterTest >> setUp [
 ]
 
 { #category : #tests }
+JbInterpreterTest >> testAssignmentStatement [
+	"comment stating purpose of message"
+	
+	self interpret: 'var x = 3; x = 10;'.
+	self assert: (interpreter environment at: 'x') equals:10.	
+	
+"	self interpret: 'var x = 3; x = 10; x = x * 2;'.
+	self assert: (interpreter environment at: 'x') equals:20."
+]
+
+{ #category : #tests }
 JbInterpreterTest >> testComparisonOperators [
 	"testing the comparison operators in JBArity2OperatorNode"
 

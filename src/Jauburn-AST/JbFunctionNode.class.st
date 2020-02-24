@@ -19,6 +19,12 @@ JbFunctionNode >> body: anObject [
 ]
 
 { #category : #accessing }
+JbFunctionNode >> evaluateIn: environment [
+
+^self
+]
+
+{ #category : #accessing }
 JbFunctionNode >> parameters [
 	^ parameters
 ]
