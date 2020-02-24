@@ -115,6 +115,43 @@ JbInterpreterTest >> testDeclarationCreatesVariable [
 ]
 
 { #category : #running }
+JbInterpreterTest >> testIfElseStatment [
+
+	self interpret: 'var x = 0;if (1 == 2) {x = 2;} else {x = 4;}'.
+	self assert: (interpreter environment at: 'x') equals: 4.
+	
+	self interpret: 'var x = 0;if (1 == 1) {x = 2;} else {x = 4;}'.
+	self assert: (interpreter environment at: 'x') equals: 2.
+	
+
+
+	
+	
+	
+
+	
+	
+]
+
+{ #category : #running }
+JbInterpreterTest >> testIfStatment [
+
+	self interpret: 'var x = 0;if (1 == 1) {x = 2;}'.
+	self assert: (interpreter environment at: 'x') equals: 2.
+	
+	self interpret: 'var x = 0;if (1 == 2) {x = 2;}'.
+	self assert: (interpreter environment at: 'x') equals: 0.
+
+
+	
+	
+	
+
+	
+	
+]
+
+{ #category : #running }
 JbInterpreterTest >> testUnaryNegationOperator [
 
 	self interpret: 'var x = -2;'.
