@@ -115,7 +115,7 @@ JbInterpreterTest >> testDeclarationCreatesVariable [
 ]
 
 { #category : #running }
-JbInterpreterTest >> testIfElseStatment [
+JbInterpreterTest >> testIfElseStatement [
 
 	self interpret: 'var x = 0;if (1 == 2) {x = 2;} else {x = 4;}'.
 	self assert: (interpreter environment at: 'x') equals: 4.
@@ -123,6 +123,11 @@ JbInterpreterTest >> testIfElseStatment [
 	self interpret: 'var x = 0;if (1 == 1) {x = 2;} else {x = 4;}'.
 	self assert: (interpreter environment at: 'x') equals: 2.
 	
+	self interpret: 'var x = 0;if ("hello" == "bye") {x = 2;} else {x = 4;}'.
+	self assert: (interpreter environment at: 'x') equals: 4.
+	
+	self interpret: 'var x = 0;if ("hello" == "hello") {x = 2;} else {x = 4;}'.
+	self assert: (interpreter environment at: 'x') equals: 2.
 
 
 	
@@ -134,13 +139,19 @@ JbInterpreterTest >> testIfElseStatment [
 ]
 
 { #category : #running }
-JbInterpreterTest >> testIfStatment [
+JbInterpreterTest >> testIfStatement [
 
 	self interpret: 'var x = 0;if (1 == 1) {x = 2;}'.
 	self assert: (interpreter environment at: 'x') equals: 2.
 	
 	self interpret: 'var x = 0;if (1 == 2) {x = 2;}'.
 	self assert: (interpreter environment at: 'x') equals: 0.
+	
+	self interpret: 'var x = 0;if ("hello" == "bye") {x = 2;}'.
+	self assert: (interpreter environment at: 'x') equals: 0.
+	
+	self interpret: 'var x = 0;if ("hello" == "hello") {x = 2;}'.
+	self assert: (interpreter environment at: 'x') equals: 2.
 
 
 	
