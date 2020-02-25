@@ -2,7 +2,17 @@ Extension { #name : #JbFunctionCallNode }
 
 { #category : #'*Jauburn-Interpreter' }
 JbFunctionCallNode >> evaluateIn: environment [
-^self
+
+| proc |
+
+"proc is my JBFunctionNode"
+proc := environment at: identifier.
+
+"Here I set up a new environment using call:in:"
+^proc call:  (arguments collect: [:e | e evaluateIn: environment])
+	in: proc environment. 
+
+
 ]
 
 { #category : #'*Jauburn-Interpreter' }

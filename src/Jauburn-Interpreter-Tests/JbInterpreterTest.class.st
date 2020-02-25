@@ -18,6 +18,13 @@ JbInterpreterTest >> interpret: aString [
 ]
 
 { #category : #running }
+JbInterpreterTest >> interpret: expression assertVar: var equals: value [
+
+self interpret: expression.
+self assert: (interpreter environment at: var) equals: value.
+]
+
+{ #category : #running }
 JbInterpreterTest >> setUp [ 
 
 	parser := JbParser new.
@@ -31,8 +38,8 @@ JbInterpreterTest >> testAssignmentStatement [
 	self interpret: 'var x = 3; x = 10;'.
 	self assert: (interpreter environment at: 'x') equals:10.	
 	
-"	self interpret: 'var x = 3; x = 10; x = x * 2;'.
-	self assert: (interpreter environment at: 'x') equals:20."
+	self interpret: 'var x = 3; x = 10; x = x * 2;'.
+	self assert: (interpreter environment at: 'x') equals:20.
 ]
 
 { #category : #tests }
@@ -87,8 +94,7 @@ JbInterpreterTest >> testComparisonOperators [
 { #category : #running }
 JbInterpreterTest >> testDeclarationBindsVariableToExpressionValue [
 
-	self interpret: 'var x = 3 + 2 * 8;'.
-	self assert: (interpreter environment at: 'x') equals: 19.
+	self interpret: 'var x = 3 + 2 * 8;' assertVar: 'x' equals: 19.
 	
 	self interpret: 'var x = 6;var y = 2*x;'.
 	self assert: (interpreter environment at: 'y') equals: 12.
@@ -112,6 +118,37 @@ JbInterpreterTest >> testDeclarationCreatesVariable [
 
 	self interpret: 'var x = 99;'.
 	self assert: (interpreter environment includesKey: 'x')
+]
+
+{ #category : #running }
+JbInterpreterTest >> testFunctionCallNode [
+
+self interpret: 'var x = 0;var y = function (a, b) {x = a + b;};'.
+self assert: (interpreter environment includesKey: 'y').
+self interpret: 'y(5, 2);'.
+self assert: (interpreter environment at: 'x') equals: 7.
+
+	
+	
+	
+
+	
+	
+]
+
+{ #category : #running }
+JbInterpreterTest >> testFunctionNode [
+
+self interpret: 'var x = function (a, b) {a = 0; b = 0;};'.
+self assert: (interpreter environment includesKey: 'x').
+
+
+	
+	
+	
+
+	
+	
 ]
 
 { #category : #running }
