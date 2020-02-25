@@ -129,7 +129,8 @@ self interpret: 'y(5, 2);'.
 self assert: (interpreter environment at: 'x') equals: 7.
 
 	
-	
+self interpret:	'var w = function (a, b) {return a + b;}; var z = w(5, 8);' 
+	assertVar: 'z' equals: '13'.
 	
 
 	

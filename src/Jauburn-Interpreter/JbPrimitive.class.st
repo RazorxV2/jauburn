@@ -23,6 +23,11 @@ JbPrimitive >> block: anObject [
 { #category : #api }
 JbPrimitive >> call: arguments in: callEnvironment [
 	"You need to implement this method!  arguments will contain the arguments to pass to this function and callEnvironment will contain the environment in place when this function was called."
-	
-	self shouldBeImplemented 
+
+"	| newEnvironment |
+	newEnvironment := JbEnvironment
+		newFromKeys: (self parameters collect: [ :e | e identifier ])
+		andValues: arguments.
+	newEnvironment outerEnvironment: callEnvironment.
+	body do: [ :e | e executeIn: newEnvironment ]"
 ]

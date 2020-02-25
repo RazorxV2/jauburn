@@ -8,7 +8,9 @@ Class {
 	#name : #JbInterpreter,
 	#superclass : #Object,
 	#instVars : [
-		'environment'
+		'environment',
+		'transcript',
+		'uimanager'
 	],
 	#category : #'Jauburn-Interpreter-Core'
 }
@@ -43,4 +45,24 @@ JbInterpreter >> run: programString [
 	| parser |
 	parser := JbParser new.
 	self interpret: (parser parse: programString)
+]
+
+{ #category : #primitives }
+JbInterpreter >> transcript [
+ ^transcript ifNil: [Transcript]
+]
+
+{ #category : #primitives }
+JbInterpreter >> transcript: aTranscript [
+	transcript := aTranscript
+]
+
+{ #category : #primitives }
+JbInterpreter >> uimanager [
+	^uimanager ifNil: [ UIManager new ]
+]
+
+{ #category : #primitives }
+JbInterpreter >> uimanager: aUIManager [
+	uimanager := aUIManager
 ]
