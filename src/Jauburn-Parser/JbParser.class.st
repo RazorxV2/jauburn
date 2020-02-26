@@ -25,6 +25,9 @@ EBNF
 <if-else-statement> ::=
    if '(' <expression> ')' <statement-block> else <statement-block>
 
+<while-statement> ::=
+   while '(' <expression> ')' <statement-block>
+
 /* Cannot be in <keyword> */
 <identifier> ::=
    <letter> <letter-or-digit-or-underscore>*

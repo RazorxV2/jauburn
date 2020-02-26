@@ -36,7 +36,7 @@ JbFunction >> call: arguments in: callEnvironment [
 	newEnvironment := JbEnvironment
 		newFromKeys: (self parameters collect: [ :e | e identifier ])
 		andValues: arguments.
-	newEnvironment outerEnvironment: callEnvironment.
+	newEnvironment outerEnvironment: self environment.
 
 	"Runs the body of the function"
 	body do: [ :e | e executeIn: newEnvironment ]

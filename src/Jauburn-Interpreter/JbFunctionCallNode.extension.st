@@ -10,7 +10,7 @@ proc := environment at: identifier.
 
 "Here I set up a new environment using call:in:"
 ^proc call:  (arguments collect: [:e | e evaluateIn: environment])
-	in: proc environment. 
+	in: environment. 
 
 
 ]

@@ -42,11 +42,14 @@ JbInterpreter >> initialize [
 { #category : #initialization }
 JbInterpreter >> initializeBindings [
 
+| primitive |
 (self class selectors select: [ :each | each endsWith: 'Binding' ])
 		do: [ :s | 
 				| binding |
 				binding := self perform: s.
-				environment at: binding key put: binding value ]
+				primitive := JbPrimitive new.
+				primitive block: binding value.
+				environment at: binding key put: primitive ]
 ]
 
 { #category : #primitives }
@@ -77,12 +80,12 @@ JbInterpreter >> notBinding [
 
 { #category : #primitives }
 JbInterpreter >> printBinding [
-	^#print -> [:value | Transcript show: value printString]
+	^#print -> [:value | self transcript show: value printString]
 ]
 
 { #category : #primitives }
 JbInterpreter >> printlnBinding [
-	^#println -> [:value | Transcript show: value printString; cr]
+	^#println -> [:value | self transcript show: value printString; cr]
 ]
 
 { #category : #api }
