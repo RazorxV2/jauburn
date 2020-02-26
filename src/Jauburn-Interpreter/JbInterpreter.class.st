@@ -15,6 +15,16 @@ Class {
 	#category : #'Jauburn-Interpreter-Core'
 }
 
+{ #category : #primitives }
+JbInterpreter >> absBinding [
+	^#abs -> [:x | x abs.]
+]
+
+{ #category : #primitives }
+JbInterpreter >> concatBinding [
+	^#concat -> [:x :y | x, y]
+]
+
 { #category : #accessing }
 JbInterpreter >> environment [ 
 
@@ -25,7 +35,23 @@ JbInterpreter >> environment [
 JbInterpreter >> initialize [ 
 
 	super initialize.
-	environment := JbEnvironment new
+	environment := JbEnvironment new.
+	self initializeBindings.
+]
+
+{ #category : #initialization }
+JbInterpreter >> initializeBindings [
+
+(self class selectors select: [ :each | each endsWith: 'Binding' ])
+		do: [ :s | 
+				| binding |
+				binding := self perform: s.
+				environment at: binding key put: binding value ]
+]
+
+{ #category : #primitives }
+JbInterpreter >> inputBinding [
+	^ #input -> [ :p | UIManager default request: p asString ]
 ]
 
 { #category : #api }
@@ -35,8 +61,28 @@ JbInterpreter >> interpret: ast [
 ]
 
 { #category : #primitives }
+JbInterpreter >> lengthBinding [
+	^ #length -> [ :l | l size]
+]
+
+{ #category : #primitives }
+JbInterpreter >> modBinding [
+	^#mod -> [:x :y | x \\ y.]
+]
+
+{ #category : #primitives }
+JbInterpreter >> notBinding [
+	^#not -> [:x | x not.]
+]
+
+{ #category : #primitives }
 JbInterpreter >> printBinding [
 	^#print -> [:value | Transcript show: value printString]
+]
+
+{ #category : #primitives }
+JbInterpreter >> printlnBinding [
+	^#println -> [:value | Transcript show: value printString; cr]
 ]
 
 { #category : #api }
