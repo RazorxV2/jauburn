@@ -288,10 +288,12 @@ JbParserTest >> testVariableDeclarationStatement [
 ]
 
 { #category : #'tests-statements' }
-JbParserTest >> testWhileLoop [
+JbParserTest >> testWhileStatement [
 
-	| stmt |
-	stmt := self parse: 'if (x = 1) {}' rule: #whileLoop.
-	self assert: stmt condition operator equals: '=='.
-	self assert: stmt trueStatements isEmpty
+	| loop |
+	loop := self parse: 'while (x < 10) {}' rule: #whileStatement.
+	self assert: loop condition operator equals: '<'.
+	self assert: loop trueStatements isEmpty.
+	"self assert: loop equals: JbWhileLoopNode."
+
 ]

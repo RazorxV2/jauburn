@@ -209,17 +209,18 @@ JbInterpreterTest >> testIfElseStatement [
 { #category : #running }
 JbInterpreterTest >> testIfStatement [
 
-	self interpret: 'var x = 0;if (1 == 1) {x = 2;}'.
-	self assert: (interpreter environment at: 'x') equals: 2.
-	
 	self interpret: 'var x = 0;if (1 == 2) {x = 2;}'.
 	self assert: (interpreter environment at: 'x') equals: 0.
+	
+	self interpret: 'var x = 0;if (1 == 1) {x = 2;}'.
+	self assert: (interpreter environment at: 'x') equals: 2.
 	
 	self interpret: 'var x = 0;if ("hello" == "bye") {x = 2;}'.
 	self assert: (interpreter environment at: 'x') equals: 0.
 	
 	self interpret: 'var x = 0;if ("hello" == "hello") {x = 2;}'.
 	self assert: (interpreter environment at: 'x') equals: 2.
+
 
 
 	
@@ -365,6 +366,23 @@ JbInterpreterTest >> testUnaryNegationOperator [
 	
 	self interpret: 'var x = -2 * -2;'.
 	self assert: (interpreter environment at: 'x') equals: 4.
+	
+	
+	
+
+	
+	
+]
+
+{ #category : #running }
+JbInterpreterTest >> testWhileStatement [
+
+	self interpret: 'var x = 0;var y = 0;while (x <= 10) {y = y + x;x = x + 1;}'.
+	self assert: (interpreter environment at: 'y') equals: 55.
+	
+
+
+
 	
 	
 	
