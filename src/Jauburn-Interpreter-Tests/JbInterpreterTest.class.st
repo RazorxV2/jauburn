@@ -55,6 +55,9 @@ JbInterpreterTest >> testAssignmentStatement [
 	
 	self interpret: 'var x = 3; x = 10; x = x * 2;'.
 	self assert: (interpreter environment at: 'x') equals:20.
+	
+	self interpret: 'var x = 3;var y = 5; x = 10; y = 4; x = x * y;'.
+	self assert: (interpreter environment at: 'x') equals:40.
 ]
 
 { #category : #tests }
