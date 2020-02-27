@@ -35,6 +35,9 @@ JbInterpreterTest >> setUp [
 JbInterpreterTest >> testAbsBinding [
 
 self interpret: 'var y = abs(-7);' assertVar: 'y' equals: 7.
+self interpret: 'var y = abs(7);' assertVar: 'y' equals: 7.
+self interpret: 'var y = abs(5-7);' assertVar: 'y' equals: 2.
+
 
 
 
@@ -140,6 +143,12 @@ JbInterpreterTest >> testDeclarationBindsVariableToExpressionValue [
 	
 	self interpret: 'var x = 10*2;var y = x/5;var z = y*4;var w = z-8;'.
 	self assert: (interpreter environment at: 'w') equals: 8.
+	
+	self interpret: 'var x = abs(-10);var y = x/5;'.
+	self assert: (interpreter environment at: 'y') equals: 2.
+	
+		self interpret: 'var y = 1/5;'.
+	self assert: (interpreter environment at: 'y') equals: 1/5.
 	
 
 	
@@ -369,6 +378,7 @@ JbInterpreterTest >> testUnaryNegationOperator [
 	
 	self interpret: 'var x = -2 * -2;'.
 	self assert: (interpreter environment at: 'x') equals: 4.
+	
 	
 	
 	

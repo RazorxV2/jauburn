@@ -7,5 +7,5 @@ JbArity1OperatorNode >> evaluateIn: environment [
 	operandValue := self operand evaluateIn: environment.
 	
 	self operator = $-
-		ifTrue: [ ^(operandValue * -1)].
+		ifTrue: [ ^operandValue negated ].
 ]
