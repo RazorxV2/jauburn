@@ -48,6 +48,18 @@ JbSamplePrograms >> interpret: aString [
 
 { #category : #programs }
 JbSamplePrograms >> jauburnGCD [
+
+self interpret: 
+	'gcd(a, b){
+	if(b == 0){return a;}
+	return gcd(b, a%b);
+	}'.
+	
+self interpret: 
+	'var v1 = input("Enter a:");
+ 	var v2 = input("Enter b:");
+ 	var result = gcd(v1, v2);
+ 	println(result);'
 ]
 
 { #category : #programs }
@@ -56,9 +68,11 @@ JbSamplePrograms >> jauburnSqrt [
 self interpret: 
 'var userInput = input("Enter Value:");
  var t = userInput;
- var delta = 1/100;
- while(abs(t - userInput/t) > delta*t){
+ var delta = 1;
+ var value = 1;
+ while(abs(t - value) > delta*t){
 	t = userInput/t + t;
-	t = t / 2;
-	print(t);}'
+	t = t/2;
+	println(t);
+	value = c/t;}'
 ]
