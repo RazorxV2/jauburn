@@ -291,9 +291,11 @@ JbParserTest >> testVariableDeclarationStatement [
 JbParserTest >> testWhileStatement [
 
 	| loop |
-	loop := self parse: 'while (x < 10) {}' rule: #whileStatement.
-	self assert: loop condition operator equals: '<'.
-	self assert: loop trueStatements isEmpty.
-	"self assert: loop equals: JbWhileLoopNode."
+	self parse: 'var x = 0; var y = 0;'.
+	loop := self parse: 'while (x <= 10) {y = y + x; x = x + 1;}' rule: #whileStatement.
+	self assert: loop condition operator equals: '<='.
+	"self assert: loop equals: JbWhileLoopNode new."
+	
+
 
 ]
