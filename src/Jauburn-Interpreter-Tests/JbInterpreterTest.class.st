@@ -33,10 +33,29 @@ JbInterpreterTest >> setUp [
 
 { #category : #'primitive tests' }
 JbInterpreterTest >> testAbsBinding [
-
+"tests abs primitive"
 self interpret: 'var y = abs(-7);' assertVar: 'y' equals: 7.
 self interpret: 'var y = abs(7);' assertVar: 'y' equals: 7.
 self interpret: 'var y = abs(5-7);' assertVar: 'y' equals: 2.
+self interpret: 'var y = abs(5*-7);' assertVar: 'y' equals: 35.
+
+
+
+
+
+	
+
+
+	
+	
+]
+
+{ #category : #'primitive tests' }
+JbInterpreterTest >> testAsFloatBinding [
+
+self interpret: 'var y = 17/8; var x = float(y);' assertVar: 'x' equals: 2.125.
+self interpret: 'var y = 17/17; var x = float(y);' assertVar: 'x' equals: 1.
+self interpret: 'var y = 17/10; var x = float(y);' assertVar: 'x' equals: 1.7.
 
 
 
@@ -51,7 +70,6 @@ self interpret: 'var y = abs(5-7);' assertVar: 'y' equals: 2.
 
 { #category : #tests }
 JbInterpreterTest >> testAssignmentStatement [
-	"comment stating purpose of message"
 	
 	self interpret: 'var x = 3; x = 10;'.
 	self assert: (interpreter environment at: 'x') equals:10.	
@@ -178,7 +196,10 @@ self interpret: 'var x = 0;var z = function (a, b) {if(a > b){x = a*10;} else{x 
 self interpret: 'z(1, 10);'.
 self assert: (interpreter environment at: 'x') equals: 10.
 
-
+self interpret: 'var x = 0;var y = function (a, b*a) {x = a + b;};'.
+self assert: (interpreter environment includesKey: 'y').
+self interpret: 'y(5, 2);'.
+self assert: (interpreter environment at: 'x') equals: 7.
 	
 
 
@@ -189,8 +210,10 @@ self assert: (interpreter environment at: 'x') equals: 10.
 { #category : #running }
 JbInterpreterTest >> testFunctionNode [
 
+
 self interpret: 'var x = function (a, b) {a = 0; b = 0;};'.
 self assert: (interpreter environment includesKey: 'x').
+
 
 
 	
@@ -252,12 +275,13 @@ JbInterpreterTest >> testIfStatement [
 
 { #category : #'primitive tests' }
 JbInterpreterTest >> testInputBinding [
-	| mu |
+"	| mu |
 	mu := JbMockUIManager new.
 	interpreter uimanager: mu.
+	mu contents: '42'."
 	
-	self interpret: 'input("Type 42!");'.
-	self assert: mu contents equals: '42'.
+	self interpret: 'var x = input("Type 42!");'
+	assertVar: 'x' equals: '42'.
 	
 
 	
@@ -290,6 +314,7 @@ JbInterpreterTest >> testModBinding [
 self interpret: 'var y = mod(10, 5);' assertVar: 'y' equals: 0.
 self interpret: 'var y = mod(10, 3);' assertVar: 'y' equals: 1.
 self interpret: 'var y = mod(10, 4);' assertVar: 'y' equals: 2.
+self interpret: 'var y = mod(0, 4);' assertVar: 'y' equals: 0.
 
 
 
@@ -375,6 +400,24 @@ self interpret: 'var y = function (a) { return a;}; var x = y(5);'
 	
 ]
 
+{ #category : #'primitive tests' }
+JbInterpreterTest >> testStringNumberBinding [
+
+self interpret: 'var y = "10"; var x = stringNum(y);' assertVar: 'x' equals: 10.
+self interpret: 'var y = "0"; var x = stringNum(y);' assertVar: 'x' equals: 0.
+
+
+
+
+
+
+	
+
+
+	
+	
+]
+
 { #category : #running }
 JbInterpreterTest >> testUnaryNegationOperator [
 
@@ -398,11 +441,18 @@ JbInterpreterTest >> testUnaryNegationOperator [
 { #category : #running }
 JbInterpreterTest >> testWhileStatement [
 
-	self interpret: 'var x = 0;var y = 0;while (x <= 10) {y = y + x;x = x + 1;}'.
+	self interpret: 'var x = 0;var y = 0;while (x<=10) {y = y + x;x = x + 1;}'.
 	self assert: (interpreter environment at: 'y') equals: 55.
 	
-
-
+	"Testing while loop as part of bigger program"
+	self interpret: 'var x = 0;var y = 0;var count = 0; 
+	if(x == 0){x = 25;}
+	while (y<1000) {
+	y = x * count;
+	count = count + 1;
+	if(count > 40){count = 777;}}'.
+	self assert: (interpreter environment at: 'count') equals: 777.
+	
 
 	
 	

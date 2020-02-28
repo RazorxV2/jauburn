@@ -50,14 +50,21 @@ JbSamplePrograms >> interpret: aString [
 JbSamplePrograms >> jauburnGCD [
 
 self interpret: 
-	'var gcd = function (a, b){
-		if(b == 0){return a;}
-		return gcd(b, a%b);
-		};
+	'
+	var gcd = function(a, b){
+	if(b == 0){
+		return a;
+		} 
+		else{
+			return gcd(b, mod(a, b));
+			} 
+	};
 	
-	var v1 = input("Enter a:");
- 	var v2 = input("Enter b:");
- 	var result = gcd(v1, v2);
+	var aInput = input("Enter a:");
+ 	var bInput = input("Enter b:");
+	var a = stringNum(aInput);
+	var b = stringNum(bInput);
+ 	var result = gcd(a, b);
  	println(result);'
 ]
 
