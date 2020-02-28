@@ -21,6 +21,11 @@ JbInterpreter >> absBinding [
 ]
 
 { #category : #primitives }
+JbInterpreter >> asFloatBinding [
+	^ #'float' -> [ :l | l asFloat round:3. ]
+]
+
+{ #category : #primitives }
 JbInterpreter >> concatBinding [
 	^#concat -> [:x :y | x, y]
 ]
@@ -97,6 +102,11 @@ JbInterpreter >> run: programString [
 ]
 
 { #category : #primitives }
+JbInterpreter >> stringNumberBinding [
+	^ #'stringNum' -> [ :l | l asNumber ]
+]
+
+{ #category : #primitives }
 JbInterpreter >> transcript [
  ^transcript ifNil: [Transcript]
 ]
@@ -108,7 +118,7 @@ JbInterpreter >> transcript: aTranscript [
 
 { #category : #primitives }
 JbInterpreter >> uimanager [
-	^uimanager ifNil: [ UIManager new ]
+	^uimanager ifNil: [ UIManager default ]
 ]
 
 { #category : #primitives }

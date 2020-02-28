@@ -50,13 +50,12 @@ JbSamplePrograms >> interpret: aString [
 JbSamplePrograms >> jauburnGCD [
 
 self interpret: 
-	'gcd(a, b){
-	if(b == 0){return a;}
-	return gcd(b, a%b);
-	}'.
+	'var gcd = function (a, b){
+		if(b == 0){return a;}
+		return gcd(b, a%b);
+		};
 	
-self interpret: 
-	'var v1 = input("Enter a:");
+	var v1 = input("Enter a:");
  	var v2 = input("Enter b:");
  	var result = gcd(v1, v2);
  	println(result);'
@@ -66,13 +65,20 @@ self interpret:
 JbSamplePrograms >> jauburnSqrt [
 
 self interpret: 
-'var userInput = input("Enter Value:");
+"My apologies for all the vars, only way it worked for some reason"
+'var input = input("Enter Number:");
+ var userInput = stringNum(input);
  var t = userInput;
- var delta = 1;
+ var delta = 1/10000;
  var value = 1;
- while(abs(t - value) > delta*t){
+ var absVal = abs(t - value);
+ var deltaT = delta*t;
+
+ while(absVal > deltaT){
 	t = userInput/t + t;
 	t = t/2;
-	println(t);
-	value = c/t;}'
+	println(float(t));
+	value = userInput/t;
+	absVal = abs(t - value);
+   deltaT = delta*t;}'
 ]

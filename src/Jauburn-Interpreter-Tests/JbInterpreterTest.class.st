@@ -170,6 +170,13 @@ self assert: (interpreter environment includesKey: 'y').
 self interpret: 'y(5, 2);'.
 self assert: (interpreter environment at: 'x') equals: 7.
 
+self interpret: 'var x = 0;var z = function (a, b) {if(a > b){x = a*10;} else{x = b;}};'.
+self interpret: 'z(5, 2);'.
+self assert: (interpreter environment at: 'x') equals: 50.
+
+self interpret: 'var x = 0;var z = function (a, b) {if(a > b){x = a*10;} else{x = b;}};'.
+self interpret: 'z(1, 10);'.
+self assert: (interpreter environment at: 'x') equals: 10.
 
 
 	
@@ -247,9 +254,10 @@ JbInterpreterTest >> testIfStatement [
 JbInterpreterTest >> testInputBinding [
 	| mu |
 	mu := JbMockUIManager new.
-	interpreter transcript: mu.
+	interpreter uimanager: mu.
 	
-	self interpret: 'var x = input("Type 42");' assertVar: 'x' equals: '42'.
+	self interpret: 'input("Type 42!");'.
+	self assert: mu contents equals: '42'.
 	
 
 	
@@ -356,8 +364,8 @@ JbInterpreterTest >> testPrintlnBinding [
 { #category : #running }
 JbInterpreterTest >> testReturnStatementlNode [
 
-self interpret: 'var y = function (a, b) { return a+b; }; var x = y(5, 3);' 
-	assertVar: 'x' equals: 8.
+self interpret: 'var y = function (a) { return a;}; var x = y(5);' 
+	assertVar: 'x' equals: 5.
 
 
 	
