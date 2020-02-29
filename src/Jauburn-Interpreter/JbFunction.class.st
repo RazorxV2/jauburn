@@ -46,8 +46,7 @@ JbFunction >> call: arguments in: callEnvironment [
 					e expression evaluateIn: newEnvironment.
 					newEnvironment valuesDo: [ :value | ^value ] ] ]
 			
-		
-	
+		"Close but no cigars for the return statment."
 
 
 ]
