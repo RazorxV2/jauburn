@@ -55,9 +55,9 @@ self interpret:
 	if(b == 0){
 		return a;
 		} 
-		else{
-			return gcd(b, mod(a, b));
-			} 
+		var modValue = mod(a, b);
+		return gcd(b, modValue);
+			
 	};
 	
 	var aInput = input("Enter a:");

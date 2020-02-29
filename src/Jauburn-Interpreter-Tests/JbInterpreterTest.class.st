@@ -196,10 +196,10 @@ self interpret: 'var x = 0;var z = function (a, b) {if(a > b){x = a*10;} else{x 
 self interpret: 'z(1, 10);'.
 self assert: (interpreter environment at: 'x') equals: 10.
 
-self interpret: 'var x = 0;var y = function (a, b*a) {x = a + b;};'.
+self interpret: 'var x = 0;var y = function (a, b) {x = a + b;};'.
 self assert: (interpreter environment includesKey: 'y').
-self interpret: 'y(5, 2);'.
-self assert: (interpreter environment at: 'x') equals: 7.
+self interpret: 'var z = mod(10, 3);y(10, z);'.
+self assert: (interpreter environment at: 'x') equals: 11.
 	
 
 
@@ -275,13 +275,13 @@ JbInterpreterTest >> testIfStatement [
 
 { #category : #'primitive tests' }
 JbInterpreterTest >> testInputBinding [
-"	| mu |
+	| mu |
 	mu := JbMockUIManager new.
 	interpreter uimanager: mu.
-	mu contents: '42'."
 	
-	self interpret: 'var x = input("Type 42!");'
-	assertVar: 'x' equals: '42'.
+	mu contents: 'blah'.
+	self interpret: 'input("Type blah");'.
+	self assert: mu contents equals: 'blah'.
 	
 
 	
@@ -387,10 +387,24 @@ JbInterpreterTest >> testPrintlnBinding [
 ]
 
 { #category : #running }
-JbInterpreterTest >> testReturnStatementlNode [
+JbInterpreterTest >> testReturnStatementNode [
 
-self interpret: 'var y = function (a) { return a;}; var x = y(5);' 
+   self interpret: 'var y = function (a) { return a;}; var x = y(5);' 
 	assertVar: 'x' equals: 5.
+	
+	self interpret: 'var t = function (a) { return a;}; var z = t(15);' 
+	assertVar: 'z' equals: 15.
+	
+	self interpret: 'var t = function (a, b) { return a + b;}; var z = t(15, 10);' 
+	assertVar: 'z' equals: 25.
+	
+	self interpret: 'var t = function (a, b) {return a + b;}; 
+						 var f = function(a, b) {return a * b}; 
+						 var p = t(5, 10);
+						 var q = f(p, 2)	' 
+	assertVar: 'q' equals: 30.
+	
+	
 
 
 	
